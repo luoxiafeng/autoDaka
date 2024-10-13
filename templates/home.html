@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>今日订单: 0</h2>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    等级: 5
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    当前余额: ¥49.42
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    总充值: ¥50.00
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    本月消费: ¥0.00
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3>订单统计</h3>
+    <canvas id="orderChart" width="400" height="200"></canvas>
+
+    <h3>历史公告</h3>
+    <div>
+        <ul>
+            <li><strong>2024-10-10</strong>
+                <ul>
+                    <li>修复部分学习通查询不到顶岗实习问题</li>
+                    <li>修复学习通补日报</li>
+                    <li>修复续费显示失败，实际上扣费问题</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
