@@ -21,6 +21,31 @@
         .submenu-icon {
             margin-right: 5px;
         }
+        .tabs-container {
+            margin-top: 10px;
+        }
+        .tab {
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            margin-right: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab.active {
+            background-color: #3F8EFF;
+            color: white;
+        }
+        .tab-close {
+            margin-left: 10px;
+            color: red;
+            cursor: pointer;
+        }
+        .tab-content {
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -42,57 +67,57 @@
                             <div class="collapse" id="clockInSubmenu">
                                 <ul class="nav flex-column ms-3">
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-school submenu-icon"></i>职校家园</a>
+                                        <a class="nav-link open-tab" data-url="/zhixun" href="#"><i class="fas fa-school submenu-icon"></i>职校家园</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-book submenu-icon"></i>学习通</a>
+                                        <a class="nav-link open-tab" data-url="/xuexitong" href="#"><i class="fas fa-book submenu-icon"></i>学习通</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-cloud submenu-icon"></i>工学云</a>
+                                        <a class="nav-link open-tab" data-url="/gongxueyun" href="#"><i class="fas fa-cloud submenu-icon"></i>工学云</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-user-graduate submenu-icon"></i>习讯云</a>
+                                        <a class="nav-link open-tab" data-url="/xunxun" href="#"><i class="fas fa-user-graduate submenu-icon"></i>习讯云</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-users submenu-icon"></i>校友邦</a>
+                                        <a class="nav-link open-tab" data-url="/xiaoyoubang" href="#"><i class="fas fa-users submenu-icon"></i>校友邦</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-graduation-cap submenu-icon"></i>广西职业</a>
+                                        <a class="nav-link open-tab" data-url="/guangxi" href="#"><i class="fas fa-graduation-cap submenu-icon"></i>广西职业</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-briefcase submenu-icon"></i>黔职通</a>
+                                        <a class="nav-link open-tab" data-url="/qianzhitong" href="#"><i class="fas fa-briefcase submenu-icon"></i>黔职通</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-bird submenu-icon"></i>喜鹊儿</a>
+                                        <a class="nav-link open-tab" data-url="/xiquer" href="#"><i class="fas fa-bird submenu-icon"></i>喜鹊儿</a>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-chalkboard-teacher submenu-icon"></i>智慧教服</a>
+                                        <a class="nav-link open-tab" data-url="/zhihuifuwu" href="#"><i class="fas fa-chalkboard-teacher submenu-icon"></i>智慧教服</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link open-tab" data-url="/orders" href="#">
                                 <i class="fas fa-list" style="color: #00B7FF;"></i> 订单列表
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link open-tab" data-url="/upload" href="#">
                                 <i class="fas fa-upload" style="color: #FFC83D;"></i> 图片上传
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link open-tab" data-url="/profile" href="#">
                                 <i class="fas fa-user" style="color: #A569FF;"></i> 个人信息
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link open-tab" data-url="/logs" href="#">
                                 <i class="fas fa-history" style="color: #5BC86F;"></i> 操作日志
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link open-tab" data-url="/agents" href="#">
                                 <i class="fas fa-users" style="color: #00B7FF;"></i> 下级代理
                             </a>
                         </li>
@@ -129,16 +154,24 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Page content -->
-                {% block content %}
-                {% endblock %}
+
+                <!-- Tabs for content area -->
+                <div class="tabs-container">
+                    <div id="tabs">
+                        <!-- Dynamic tabs will be appended here -->
+                    </div>
+                </div>
+
+                <!-- Content of the active tab -->
+                <div class="tab-content" id="tab-content">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+
             </main>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         // Refresh page
         document.getElementById('refreshPage').addEventListener('click', function () {
@@ -154,6 +187,67 @@
                     document.exitFullscreen();
                 }
             }
+        });
+
+        // Add new tab logic
+        const tabsContainer = document.getElementById('tabs');
+        const tabContentContainer = document.getElementById('tab-content');
+        let openTabs = {};
+
+        function createTab(url, title) {
+            if (!openTabs[url]) {
+                // Create tab
+                const tab = document.createElement('div');
+                tab.className = 'tab';
+                tab.innerHTML = `${title} <span class="tab-close">&times;</span>`;
+                tab.setAttribute('data-url', url);
+                tab.addEventListener('click', function() {
+                    setActiveTab(url);
+                });
+                tab.querySelector('.tab-close').addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    closeTab(url);
+                });
+                tabsContainer.appendChild(tab);
+
+                // Load content for the new tab
+                loadTabContent(url);
+                openTabs[url] = tab;
+            }
+            setActiveTab(url);
+        }
+
+        function setActiveTab(url) {
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            if (openTabs[url]) {
+                openTabs[url].classList.add('active');
+                loadTabContent(url);
+            }
+        }
+
+        function closeTab(url) {
+            if (openTabs[url]) {
+                tabsContainer.removeChild(openTabs[url]);
+                delete openTabs[url];
+                tabContentContainer.innerHTML = '';  // Clear content
+            }
+        }
+
+        function loadTabContent(url) {
+            // Here we simulate loading content based on URL.
+            // In real implementation, you would fetch or load the actual content.
+            tabContentContainer.innerHTML = `正在加载 ${url} 的内容...`;
+        }
+
+        // Click handler for menu items that should open in new tabs
+        document.querySelectorAll('.open-tab').forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                const url = this.getAttribute('data-url');
+                const title = this.textContent.trim();
+                createTab(url, title);
+            });
         });
     </script>
 </body>
