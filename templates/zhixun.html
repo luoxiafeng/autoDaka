@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职校家园</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-check-inline {
+            margin-right: 10px;
+        }
+        .btn {
+            width: 120px;
+        }
+        .tips {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .note {
+            color: #007bff;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="tips">
+            Tips: 重复下单会被视为作弊，且下单信息会覆盖在已存在的订单上。默认月报打时间为周日8:00，月报时间为月末凌晨。过期时间超出3天后不支持补签，若超过7天系统将自动删除该订单。职校家园只支持打卡，所以以下卡号，正报与月报项无法删除，补卡自用。
+        </p>
+
+        <p class="note">
+            需要开启拓展功能 >>
+        </p>
+
+        <form>
+            <!-- 帐号密码输入 -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="account">账号 *</label>
+                    <input type="text" class="form-control" id="account" placeholder="请输入账号" required>
+                </div>
+                <div class="col">
+                    <label for="password">密码 *</label>
+                    <input type="password" class="form-control" id="password" placeholder="请输入密码" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="email">邮箱</label>
+                    <input type="email" class="form-control" id="email" placeholder="用于接收打卡通知">
+                </div>
+                <div class="col">
+                    <label for="name">姓名 (非必填)</label>
+                    <input type="text" class="form-control" id="name" placeholder="用户姓名 (非必填)">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="profession">岗位/专业 (非必填)</label>
+                <input type="text" class="form-control" id="profession" placeholder="请输入岗位或专业">
+            </div>
+
+            <div class="mb-3">
+                <label>打卡地址</label>
+                <input type="text" class="form-control" placeholder="打卡地址 (自动获取)">
+            </div>
+
+            <!-- 打卡设置 -->
+            <div class="mb-3">
+                <label>打卡周期 *</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="allDays" value="全选">
+                    <label class="form-check-label" for="allDays">全选</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="monday" value="周一">
+                    <label class="form-check-label" for="monday">周一</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="tuesday" value="周二">
+                    <label class="form-check-label" for="tuesday">周二</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="wednesday" value="周三">
+                    <label class="form-check-label" for="wednesday">周三</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="thursday" value="周四">
+                    <label class="form-check-label" for="thursday">周四</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="friday" value="周五">
+                    <label class="form-check-label" for="friday">周五</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="saturday" value="周六">
+                    <label class="form-check-label" for="saturday">周六</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sunday" value="周日">
+                    <label class="form-check-label" for="sunday">周日</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="time">打卡时间</label>
+                <input type="time" class="form-control" id="time" value="08:00">
+            </div>
+
+            <div class="mb-3">
+                <label>汇报 *</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="report" id="daily" value="日报">
+                    <label class="form-check-label" for="daily">日报</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="report" id="weekly" value="周报">
+                    <label class="form-check-label" for="weekly">周报</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="report" id="monthly" value="月报" checked>
+                    <label class="form-check-label" for="monthly">月报</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>打卡天数 *</label>
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary" type="button">-</button>
+                    <input type="text" class="form-control text-center" value="1">
+                    <button class="btn btn-outline-secondary" type="button">+</button>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>预估扣费</label>
+                <p>预估扣费 0.3元</p>
+            </div>
+
+            <!-- 提交按钮 -->
+            <button type="submit" class="btn btn-primary">创建订单</button>
+            <button type="reset" class="btn btn-secondary">重置</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

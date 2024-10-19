@@ -63,6 +63,10 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+@app.route('/zhixun')
+def zhixun():
+    return render_template('zhixun.html')
+
 # 启动应用前初始化数据库
 if __name__ == '__main__':
     init_db()
