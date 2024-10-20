@@ -215,6 +215,33 @@ def gongxueyun():
 
     return render_template('gongxueyun.html')
 
+@app.route('/xixunyun')
+def xinxiang():
+    return render_template('xixunyun.html')
+
+@app.route('/xiaoyoubang')
+def xiaoyoubang():
+    return render_template('xiaoyoubang.html')
+
+@app.route('/guangxizhiye')
+def guangxizhiye():
+    return render_template('guangxizhiye.html')
+
+@app.route('/qianzhitong')
+def qianzhitong():
+    return render_template('qianzhitong.html')
+
+@app.route('/xiquer')
+def xiquer():
+    return render_template('xiquer.html')
+
+@app.route('/zhihuijiaofu')
+def zhihuijiaofu():
+    return render_template('zhihuijiaofu.html')
+
+@app.route('/orders')
+def orders():
+    return render_template('orders.html')
 
 # 启动应用前初始化数据库
 if __name__ == '__main__':
