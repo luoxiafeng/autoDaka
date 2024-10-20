@@ -183,7 +183,7 @@
                 const url = this.getAttribute('data-url');
                 const title = this.textContent.trim();
 
-                createTab(url, title);  // 通过此函数创建新标签页
+                createTab(url, title);
             });
         });
 
@@ -202,7 +202,7 @@
                 });
                 tabsContainer.appendChild(tab);
 
-                loadTabContent(url);  // 加载标签页内容
+                loadTabContent(url);
                 openTabs[url] = tab;
             }
             setActiveTab(url);
@@ -219,7 +219,7 @@
             if (openTabs[url]) {
                 tabsContainer.removeChild(openTabs[url]);
                 delete openTabs[url];
-                tabContentContainer.innerHTML = '';  // 清空内容
+                tabContentContainer.innerHTML = '';
             }
         }
 
