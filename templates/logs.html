@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志列表</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .container-fluid {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 100%;
+        }
+        .table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .tips {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .filter-section input, .filter-section select {
+            max-width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h4>日志列表</h4>
+        <div class="filter-section">
+            <div>
+                <select class="form-select">
+                    <option selected>条件</option>
+                    <option value="条件1">条件1</option>
+                    <option value="条件2">条件2</option>
+                </select>
+                <input type="text" class="form-control d-inline-block" placeholder="模糊查询" style="width: 200px; margin-left: 10px;">
+            </div>
+            <button type="submit" class="btn btn-secondary">搜索</button>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>余额变动</th>
+                    <th>变动后</th>
+                    <th>操作内容</th>
+                    <th>添加时间</th>
+                    <th>操作IP</th>
+                    <th>操作UA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>24193</td>
+                    <td>0</td>
+                    <td>49.42</td>
+                    <td>用户登录</td>
+                    <td>2024-10-19 22:15:25</td>
+                    <td>111.216.120.138</td>
+                    <td>Mozilla/5.0 (Windows NT 10.0; Win64; x64)</td>
+                </tr>
+                <!-- 更多日志数据 -->
+                <tr>
+                    <td colspan="7">暂无更多数据</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link">前一页</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">后一页</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

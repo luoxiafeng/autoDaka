@@ -243,6 +243,18 @@ def zhihuijiaofu():
 def orders():
     return render_template('orders.html')
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+@app.route('/logs')
+def logs():
+    return render_template('logs.html')
+
+@app.route('/agents')
+def agents():
+    return render_template('agents.html')
+
 # 启动应用前初始化数据库
 if __name__ == '__main__':
     init_db()
