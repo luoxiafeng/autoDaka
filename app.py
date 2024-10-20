@@ -177,6 +177,45 @@ def xuexitong():
 
     return render_template('xuexitong.html')
 
+@app.route('/gongxueyun', methods=['GET', 'POST'])
+def gongxueyun():
+    if request.method == 'POST':
+        account = request.form['account']
+        password = request.form['password']
+        email = request.form.get('email')
+        name = request.form.get('name')
+        profession = request.form.get('profession')
+        address = request.form.get('address')
+        days = ','.join(request.form.getlist('days'))
+        report = request.form['report']
+        time = request.form['time']
+        total_days = request.form['total_days']
+
+        # 保存订单信息到数据库
+        order_data = {
+            'account': account,
+            'password': password,
+            'email': email,
+            'name': name,
+            'profession': profession,
+            'address': address,
+            'days': days,
+            'report': report,
+            'time': time,
+            'total_days': total_days
+        }
+
+        try:
+            save_order(order_data)
+            flash('工学云订单创建成功！')
+            return redirect(url_for('gongxueyun'))
+        except Exception as e:
+            flash('订单创建失败，请重试！')
+            print(e)
+
+    return render_template('gongxueyun.html')
+
+
 # 启动应用前初始化数据库
 if __name__ == '__main__':
     init_db()
