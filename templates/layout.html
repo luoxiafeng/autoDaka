@@ -203,7 +203,7 @@
                 tabsContainer.appendChild(tab);
 
                 loadTabContent(url);
-                openTabs[url] = tab;
+                openTabs[url] = { tab, content: '' };
             }
             setActiveTab(url);
         }
@@ -211,15 +211,20 @@
         function setActiveTab(url) {
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             if (openTabs[url]) {
-                openTabs[url].classList.add('active');
+                openTabs[url].tab.classList.add('active');
+                tabContentContainer.innerHTML = openTabs[url].content;
             }
         }
 
         function closeTab(url) {
             if (openTabs[url]) {
-                tabsContainer.removeChild(openTabs[url]);
+                tabsContainer.removeChild(openTabs[url].tab);
                 delete openTabs[url];
                 tabContentContainer.innerHTML = '';
+                if (Object.keys(openTabs).length > 0) {
+                    const firstTabUrl = Object.keys(openTabs)[0];
+                    setActiveTab(firstTabUrl);
+                }
             }
         }
 
@@ -227,6 +232,7 @@
             fetch(url)
                 .then(response => response.text())
                 .then(html => {
+                    openTabs[url].content = html;
                     tabContentContainer.innerHTML = html;
                 })
                 .catch(error => {
