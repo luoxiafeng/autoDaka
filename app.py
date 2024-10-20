@@ -5,17 +5,14 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # 数据库连接函数
-def get_user(username):
+def get_db_connection():
     conn = sqlite3.connect('user_auth.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM users WHERE username=?', (username,))
-    user = cursor.fetchone()
-    conn.close()
-    return user
+    conn.row_factory = sqlite3.Row
+    return conn
 
-# 初始化数据库并创建订单表
+# 初始化数据库并创建代理表
 def init_db():
-    conn = sqlite3.connect('user_auth.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     # 创建用户表
@@ -45,6 +42,19 @@ def init_db():
         )
     ''')
 
+    # 创建代理表
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS agents (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nickname TEXT NOT NULL,
+            account TEXT NOT NULL,
+            password TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
     # 插入管理员账号
     cursor.execute('SELECT * FROM users WHERE username=?', ('admin',))
     if cursor.fetchone() is None:
@@ -56,7 +66,7 @@ def init_db():
 
 # 保存订单数据到数据库
 def save_order(data):
-    conn = sqlite3.connect('user_auth.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -69,6 +79,31 @@ def save_order(data):
     conn.commit()
     conn.close()
 
+# 下级代理页面路由
+@app.route('/agents')
+def agents():
+    conn = get_db_connection()
+    agents = conn.execute('SELECT * FROM agents').fetchall()
+    conn.close()
+    return render_template('agents.html', agents=agents)
+
+# 添加代理路由
+@app.route('/add_agent', methods=['POST'])
+def add_agent():
+    nickname = request.form['nickname']
+    account = request.form['account']
+    password = request.form['password']
+    level = request.form['level']
+
+    conn = get_db_connection()
+    conn.execute('INSERT INTO agents (nickname, account, password, level) VALUES (?, ?, ?, ?)',
+                 (nickname, account, password, level))
+    conn.commit()
+    conn.close()
+
+    flash('代理添加成功！')
+    return redirect(url_for('agents'))
+
 # 登录页面路由
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -76,11 +111,13 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        user = get_user(username)
+        conn = get_db_connection()
+        user = conn.execute('SELECT * FROM users WHERE username=?', (username,)).fetchone()
+        conn.close()
         
-        if user and user[2] == password:  # 密码验证
+        if user and user['password'] == password:  # 密码验证
             session['username'] = username
-            session['user_type'] = user[3]
+            session['user_type'] = user['user_type']
             return redirect(url_for('home'))
         else:
             flash('用户名或密码错误')
@@ -99,7 +136,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
-# 职校家园表单页面路由
+# 订单页面路由
 @app.route('/zhixun', methods=['GET', 'POST'])
 def zhixun():
     if request.method == 'POST':
@@ -250,10 +287,6 @@ def profile():
 @app.route('/logs')
 def logs():
     return render_template('logs.html')
-
-@app.route('/agents')
-def agents():
-    return render_template('agents.html')
 
 # 启动应用前初始化数据库
 if __name__ == '__main__':

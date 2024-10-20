@@ -79,21 +79,28 @@
             <thead>
                 <tr>
                     <th>uid</th>
-                    <th>编辑</th>
                     <th>昵称</th>
                     <th>账号</th>
-                    <th>余额</th>
-                    <th>总充值</th>
                     <th>等级</th>
-                    <th>状态</th>
                     <th>添加时间</th>
                     <th>最后在线时间</th>
                 </tr>
             </thead>
             <tbody>
+                {% for agent in agents %}
                 <tr>
-                    <td colspan="10">暂无数据</td>
+                    <td>{{ agent['id'] }}</td>
+                    <td>{{ agent['nickname'] }}</td>
+                    <td>{{ agent['account'] }}</td>
+                    <td>{{ agent['level'] }}</td>
+                    <td>{{ agent['created_at'] }}</td>
+                    <td>{{ agent['last_login'] }}</td>
                 </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">暂无数据</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
 
@@ -121,31 +128,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="addAgentForm" method="POST" action="/add_agent">
                         <div class="form-group">
                             <label for="nickname">昵称</label>
-                            <input type="text" class="form-control" id="nickname" placeholder="想一个昵称吧">
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="想一个昵称吧" required>
                         </div>
                         <div class="form-group">
                             <label for="account">账号</label>
-                            <input type="text" class="form-control" id="account" placeholder="请输入账号">
+                            <input type="text" class="form-control" id="account" name="account" placeholder="请输入账号" required>
                         </div>
                         <div class="form-group">
                             <label for="password">密码</label>
-                            <input type="password" class="form-control" id="password" placeholder="请输入密码">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" required>
                         </div>
                         <div class="form-group d-flex justify-content-between">
                             <label for="level">等级</label>
                             <div>
                                 <button type="button" class="btn btn-outline-secondary" id="decreaseLevel">-</button>
-                                <input type="text" id="level" class="form-control d-inline-block" style="width: 50px;" value="0" readonly>
+                                <input type="text" id="level" name="level" class="form-control d-inline-block" style="width: 50px;" value="0" readonly>
                                 <button type="button" class="btn btn-outline-secondary" id="increaseLevel">+</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">添加</button>
+                    <button type="submit" class="btn btn-primary" form="addAgentForm">添加</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                 </div>
             </div>
