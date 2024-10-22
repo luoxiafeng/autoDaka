@@ -8,3 +8,46 @@
 .navbar {
     margin-bottom: 20px;
 }
+
+/* 调整卡片的样式 */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #3F8EFF;
+}
+
+.card-text {
+    font-size: 1.2em;
+    color: #6c757d;
+}
+
+/* 历史公告内容的滚动条美化 */
+.historical-announcements {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.historical-announcements ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.historical-announcements li {
+    margin-bottom: 15px;
+}
+
+.historical-announcements strong {
+    font-size: 1.1em;
+    color: #007bff;
+}
+
+/* 图表的容器样式 */
+#orderChart {
+    width: 100%;
+    height: 200px;
+}

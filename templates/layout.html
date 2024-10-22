@@ -55,11 +55,13 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
+                        <!-- 首页，直接加载，不使用标签页 -->
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">
                                 <i class="fas fa-home" style="color: #3F8EFF;"></i> 首页
                             </a>
                         </li>
+                        <!-- 打卡中心（使用折叠菜单项）-->
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#clockInSubmenu" role="button" aria-expanded="false" aria-controls="clockInSubmenu">
                                 <i class="fas fa-paper-plane" style="color: #5BC86F;"></i> 打卡中心
@@ -96,25 +98,29 @@
                                 </ul>
                             </div>
                         </li>
+                        <!-- 订单列表 -->
                         <li class="nav-item">
                             <a class="nav-link open-tab" data-url="/orders" href="#">
                                 <i class="fas fa-list" style="color: #00B7FF;"></i> 订单列表
                             </a>
                         </li>
+                        <!-- 图片上传 -->
                         <li class="nav-item">
                             <a class="nav-link open-tab" data-url="/upload" href="#">
                                 <i class="fas fa-upload" style="color: #FFC83D;"></i> 图片上传
                             </a>
                         </li>
+                        <!-- 个人信息 -->
                         <li class="nav-item">
                             <a class="nav-link open-tab" data-url="/profile" href="#"><i class="fas fa-user" style="color: #A569FF;"></i> 个人信息</a>
                         </li>
-                        
+                        <!-- 操作日志 -->
                         <li class="nav-item">
                             <a class="nav-link open-tab" data-url="/logs" href="#">
                                 <i class="fas fa-history" style="color: #5BC86F;"></i> 操作日志
                             </a>
                         </li>
+                        <!-- 下级代理 -->
                         <li class="nav-item">
                             <a class="nav-link open-tab" data-url="/agents" href="#">
                                 <i class="fas fa-users" style="color: #00B7FF;"></i> 下级代理
@@ -161,11 +167,10 @@
                     </div>
                 </div>
 
-                <!-- Content of the active tab -->
+                <!-- Content of the active tab or page -->
                 <div class="tab-content" id="tab-content">
-                    <!-- Dynamic content will be loaded here -->
+                    {% block content %}{% endblock %}
                 </div>
-
             </main>
         </div>
     </div>
@@ -176,6 +181,7 @@
         const tabContentContainer = document.getElementById('tab-content');
         let openTabs = {};
 
+        // Click handler for menu items that should open in new tabs
         document.querySelectorAll('.open-tab').forEach(item => {
             item.addEventListener('click', function(event) {
                 event.preventDefault();
