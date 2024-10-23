@@ -10,22 +10,23 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-# 初始化数据库并创建代理表
 def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # 创建用户表
+    # 创建新的 users 表，包含 nickname、invite_code 和 user_type
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
             password TEXT NOT NULL,
+            nickname TEXT,
+            invite_code TEXT,
             user_type TEXT NOT NULL
         )
     ''')
 
-    # 创建订单表
+    # 创建其他表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS orders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,7 +43,6 @@ def init_db():
         )
     ''')
 
-    # 创建代理表
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS agents (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,11 +58,12 @@ def init_db():
     # 插入管理员账号
     cursor.execute('SELECT * FROM users WHERE username=?', ('admin',))
     if cursor.fetchone() is None:
-        cursor.execute('INSERT INTO users (username, password, user_type) VALUES (?, ?, ?)',
-                       ('admin', 'admin456@@', '管理员'))
+        cursor.execute('INSERT INTO users (username, password, nickname, invite_code, user_type) VALUES (?, ?, ?, ?, ?)',
+                       ('admin', 'admin456@@', '管理员', None, '管理员'))
 
     conn.commit()
     conn.close()
+
 
 # 保存订单数据到数据库
 def save_order(data):
@@ -123,6 +124,29 @@ def login():
             flash('用户名或密码错误')
 
     return render_template('login.html')
+
+# 新增注册页面路由
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        nickname = request.form['nickname']
+        username = request.form['username']
+        password = request.form['password']
+        invite_code = request.form['invite_code']
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # 插入新用户
+        cursor.execute('INSERT INTO users (username, password, nickname, invite_code, user_type) VALUES (?, ?, ?, ?, ?)',
+                       (username, password, nickname, invite_code, '普通用户'))
+        conn.commit()
+        conn.close()
+
+        flash('注册成功，请登录！')
+        return redirect(url_for('login'))
+
+    return render_template('register.html')
 
 @app.route('/')
 def home():

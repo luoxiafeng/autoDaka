@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户登录</title>
+    <title>用户注册</title>
     <style>
         body {
             background-image: url("{{ url_for('static', filename='images/login_background.png') }}");
@@ -13,25 +13,26 @@
             align-items: center;
             height: 100vh;
         }
-        .login-container {
+        .register-container {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 350px;
         }
-        .login-container img {
+        .register-container img {
             width: 150px;
             margin-bottom: 20px;
         }
-        .login-container input {
+        .register-container input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .login-container button {
+        .register-container button {
             width: 100%;
             padding: 10px;
             background-color: #007bff;
@@ -40,22 +41,36 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .login-container a {
+        .register-container a {
             display: block;
             margin-top: 15px;
             color: #007bff;
         }
+        .required-label {
+            color: red;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="用户登录">
+    <div class="register-container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="用户注册">
         <form method="POST">
-            <input type="text" name="username" placeholder="请输入用户名" required>
+            <label><span class="required-label">*</span>昵称</label>
+            <input type="text" name="nickname" placeholder="想一个好听点的~" required>
+
+            <label><span class="required-label">*</span>账号</label>
+            <input type="text" name="username" placeholder="请使用您的QQ作为账号！" required>
+
+            <label><span class="required-label">*</span>密码</label>
             <input type="password" name="password" placeholder="请输入密码" required>
-            <button type="submit">立即登录</button>
+
+            <label>邀请码</label>
+            <input type="text" name="invite_code" placeholder="请输入邀请码">
+
+            <button type="submit">立即注册</button>
         </form>
-        <a href="{{ url_for('register') }}">注册新用户>></a>
+        <a href="{{ url_for('login') }}">已有账号？立即登录</a>
     </div>
 </body>
 </html>
